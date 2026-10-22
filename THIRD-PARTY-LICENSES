@@ -1,0 +1,62 @@
+This project does not include, copy, or modify third-party source code. The packages below are
+runtime dependencies that pip installs from PyPI when you install this project. They are listed for
+attribution and license awareness. Each package is distributed under its own license, available
+from its project page.
+
+Direct dependencies
+-------------------
+boto3            Apache-2.0      https://github.com/boto/boto3
+langchain-core   MIT             https://github.com/langchain-ai/langchain
+langgraph        MIT             https://github.com/langchain-ai/langgraph
+
+Transitive dependencies (resolved 2026-10-20)
+---------------------------------------------
+annotated-types      MIT
+anyio                MIT
+botocore             Apache-2.0
+certifi              MPL-2.0
+charset-normalizer   MIT
+distro               Apache-2.0
+h11                  MIT
+httpcore             BSD-3-Clause
+httpcore2            BSD-3-Clause
+httpx                BSD-3-Clause
+httpx2               BSD-3-Clause
+idna                 BSD-3-Clause
+jmespath             MIT
+jsonpatch            BSD-3-Clause
+jsonpointer          BSD-3-Clause
+langchain-protocol   MIT
+langgraph-checkpoint MIT
+langgraph-prebuilt   MIT
+langgraph-sdk        MIT
+langsmith            MIT
+orjson               MPL-2.0 AND (Apache-2.0 OR MIT)
+ormsgpack            Apache-2.0 OR MIT
+packaging            Apache-2.0 OR BSD-2-Clause
+pydantic             MIT
+pydantic-core        MIT
+python-dateutil      Apache-2.0 OR BSD-3-Clause
+pyyaml               MIT
+requests             Apache-2.0
+requests-toolbelt    Apache-2.0
+s3transfer           Apache-2.0
+six                  MIT
+sniffio              MIT OR Apache-2.0
+tenacity             Apache-2.0
+truststore           MIT
+typing-extensions    PSF-2.0
+typing-inspection    MIT
+urllib3              MIT
+uuid-utils           BSD-3-Clause
+websockets           BSD-3-Clause
+xxhash               BSD-2-Clause
+zstandard            BSD-3-Clause
+
+Development dependencies (not installed by default)
+---------------------------------------------------
+moto      Apache-2.0   https://github.com/getmoto/moto
+pytest    MIT          https://github.com/pytest-dev/pytest
+ruff      MIT          https://github.com/astral-sh/ruff
+bandit    Apache-2.0   https://github.com/PyCQA/bandit
+pip-audit Apache-2.0   https://github.com/pypa/pip-audit

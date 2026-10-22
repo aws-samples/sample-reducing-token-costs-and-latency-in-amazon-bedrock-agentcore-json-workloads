@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sample-large-json-context"
+version = "0.1.0"
+description = "Reducing token costs and latency in Amazon Bedrock AgentCore JSON workloads"
+readme = "README.md"
+license = "MIT-0"
+requires-python = ">=3.12"
+dependencies = [
+    "boto3>=1.35",
+    # 1.2.5 is the first release where load() accepts allowed_objects, which hydrate_state
+    # uses to restrict deserialization to message types.
+    "langchain-core>=1.2.5",
+    "langgraph>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "moto[s3]>=5",
+    "pytest>=8",
+    "ruff>=0.6",
+    "bandit>=1.7",
+    "pip-audit>=2.7",
+]
+
+[tool.setuptools]
+packages = ["large_json_context"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# The package reproduces the post's code as closely as possible, including its typing style
+# (Dict, List, Optional) and its `# noqa` comment. These rules would rewrite that code so it no
+# longer matches the post, so they are turned off.
+ignore = ["UP006", "UP035", "UP045", "RUF100"]
