@@ -45,6 +45,8 @@ tests/                  # Unit tests, run against an in-memory S3 emulator
 
 ## Getting started
 
+On macOS and Linux:
+
 ```bash
 git clone https://github.com/aws-samples/sample-reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads.git
 cd sample-reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads
@@ -52,6 +54,29 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -e '.[dev]'
 ```
+
+On Windows, in PowerShell:
+
+```powershell
+git clone https://github.com/aws-samples/sample-reducing-token-costs-and-latency-in-amazon-bedrock-agentcore-json-workloads.git agentcore-json
+cd agentcore-json
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -e ".[dev]"
+```
+
+Notes for Windows:
+
+- Clone into a short folder name such as `agentcore-json`. Some test dependencies install deeply
+  nested files, and under the full repository name their paths can exceed the Windows 260-character
+  limit, which makes `pip install` fail. Alternatively, enable long paths in Windows.
+- If PowerShell refuses to run `Activate.ps1`, run
+  `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once, then activate again.
+- `py` is the Python launcher that the python.org installer adds. If you don't have it, use `python`.
+- In Command Prompt instead of PowerShell, activate with `.venv\Scripts\activate.bat`, set variables
+  with `set NAME=value`, and refer to them as `%NAME%`.
+
+Once the virtual environment is active, the remaining commands are the same on every platform.
 
 Run the tests:
 
@@ -84,11 +109,19 @@ Strategy 3: compact oversized dictionary outputs
   descriptor fields            : ['by_resource', 'horizon_days', 'overloaded', 'scenario_id']
 ```
 
-To run the demo against your own bucket instead:
+To run the demo against your own bucket instead, on macOS and Linux:
 
 ```bash
 export SESSION_STATE_BUCKET=<your-bucket-name>
 export AWS_REGION=<your-bucket-region>
+python demo.py
+```
+
+On Windows, in PowerShell:
+
+```powershell
+$env:SESSION_STATE_BUCKET = "<your-bucket-name>"
+$env:AWS_REGION = "<your-bucket-region>"
 python demo.py
 ```
 
@@ -230,10 +263,16 @@ pay for Amazon Bedrock model usage and the AgentCore features you use; see
 
 ## Clean up
 
-If you ran the demo against your own bucket, delete what it wrote:
+If you ran the demo against your own bucket, delete what it wrote. On macOS and Linux:
 
 ```bash
 aws s3 rm "s3://$SESSION_STATE_BUCKET/artifacts/" --recursive
+```
+
+On Windows, in PowerShell:
+
+```powershell
+aws s3 rm "s3://$env:SESSION_STATE_BUCKET/artifacts/" --recursive
 ```
 
 This deletes every object under that prefix. If your bucket has versioning enabled, earlier
