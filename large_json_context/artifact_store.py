@@ -19,15 +19,12 @@ from typing import Any, Dict, Optional
 
 logger = logging.getLogger(__name__)
 
-# Differs from the post: the format every reference this store produces must match. See _key.
+# The format every reference this store produces must match. See _key.
 _REF_PATTERN = re.compile(r"[0-9a-f]{64}")
 
 
 def _canonical_bytes(payload: Any) -> bytes:
-    """Serialize a payload deterministically: sorted keys, compact separators, UTF-8.
-
-    Differs from the post: the post calls this helper without showing it.
-    """
+    """Serialize a payload deterministically: sorted keys, compact separators, UTF-8."""
     return json.dumps(payload, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")
 
 
@@ -49,7 +46,7 @@ class S3ArtifactStore:
 
         self.bucket = bucket or os.getenv("SESSION_STATE_BUCKET")
         self.prefix = (prefix or os.getenv("ARTIFACT_STORE_PREFIX", "artifacts")).strip("/")
-        # Differs from the post: no hardcoded default Region. An explicit argument wins, then
+        # No hardcoded default Region. An explicit argument wins, then
         # AWS_REGION, which boto3 does not read on its own. Otherwise the value is None and
         # boto3 falls back to its default chain: AWS_DEFAULT_REGION, the profile's region,
         # then instance metadata.
@@ -63,7 +60,7 @@ class S3ArtifactStore:
             if profile
             else boto3.Session(region_name=region_name)
         )
-        # Differs from the post: fail here rather than let the S3 client fall back to
+        # Fail here rather than let the S3 client fall back to
         # us-east-1 without an error, which puts artifacts in an unexpected Region.
         if session.region_name is None:
             raise ValueError(
@@ -76,7 +73,7 @@ class S3ArtifactStore:
         logger.info("S3ArtifactStore initialized: bucket=%s, prefix=%s", self.bucket, self.prefix)
 
     def _key(self, ref: str) -> str:
-        # Differs from the post: references reach this method from the model, through the
+        # References reach this method from the model, through the
         # paging tool, so accept only the digest format this store produces. That stops a
         # crafted value such as "../other/object" from addressing an arbitrary key.
         if not _REF_PATTERN.fullmatch(ref):
@@ -110,10 +107,8 @@ class S3ArtifactStore:
         return payload
 
 
-# Differs from the post: the post creates the store at import time with
-# `artifact_store = S3ArtifactStore()`, which raises as soon as the module is imported without
-# SESSION_STATE_BUCKET set. The store is created on first use instead. The `artifact_store`
-# name is kept, so the compaction code reads exactly as it does in the post.
+# The store is created on first use rather than at import, so importing this module doesn't
+# require SESSION_STATE_BUCKET to be set.
 _store: Optional[S3ArtifactStore] = None
 _store_lock = threading.Lock()
 

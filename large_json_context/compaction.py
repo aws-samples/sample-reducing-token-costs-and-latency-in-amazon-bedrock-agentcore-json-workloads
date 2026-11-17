@@ -14,7 +14,6 @@ from typing import Any, Dict, List, Optional
 
 from .artifact_store import artifact_store
 
-# Differs from the post: the post uses these two constants without giving values.
 # Lists longer than this are stored and returned as this many items plus a handle.
 _LLM_SAMPLE_SIZE = 5
 # Serialized results longer than this are replaced by a descriptor. 7,600 characters is about
@@ -23,11 +22,7 @@ _MAX_TOOL_CONTENT_CHARS = 7_600
 
 
 def compact_list_result(result: List[Any]) -> str:
-    """Return a short list in full, or store a long one and return a sample plus a handle.
-
-    Differs from the post: the post shows the body of the `if` below without its enclosing
-    function or the return for short lists.
-    """
+    """Return a short list in full, or store a long one and return a sample plus a handle."""
     if len(result) > _LLM_SAMPLE_SIZE:
         handle = artifact_store.put_json(result)
         return json.dumps(
@@ -78,8 +73,6 @@ def compact_tool_result(
     `llm_view` is what the model would see, `full_view` is the complete result to store (the
     same as `llm_view` when omitted), and `handle` is an existing handle if the full result has
     already been stored.
-
-    Differs from the post: the post shows the body below without its enclosing function.
     """
     if full_view is None:
         full_view = llm_view

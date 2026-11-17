@@ -142,10 +142,9 @@ The demo writes objects under the `artifacts/` prefix of that bucket. See [Clean
 ## About `TOPTRequest` and `TOPTResponse`
 
 TOPT stands for Training Optimizer, the optimization service whose requests and responses the
-agent in the post works with. The post uses two domain classes, `TOPTRequest` and `TOPTResponse`,
-without defining them. They hold the optimizer's request JSON and response JSON after parsing them
-into typed objects that tools can work with. Their fields depend on your optimizer, so the post
-doesn't show them.
+agent in the post works with. `TOPTRequest` and `TOPTResponse` hold the optimizer's request JSON
+and response JSON after parsing them into typed objects that tools can work with. Their fields
+depend on your optimizer.
 
 `large_json_context/state.py` includes minimal stand-ins that keep the raw dictionary in a `raw`
 attribute, so the code runs as-is. Replace them with your own classes, and keep a `from_dict`
@@ -159,7 +158,7 @@ Every name used in the code, in the order the post introduces it.
 
 | Name | What it is |
 |---|---|
-| `OriginalGraphState` | The agent state before Strategy 1, with every heavy payload held inline. The post shows it as its first `GraphState`; it's renamed here so both versions can exist together. |
+| `OriginalGraphState` | The agent state before Strategy 1, with every heavy payload held inline. |
 | `GraphState` | The live LangGraph state: conversation messages, the parsed domain objects, and a reference for each heavy payload. |
 | `PersistedState` | What's written to AgentCore Memory: the messages and the artifact references only. |
 | `TOPTRequest`, `TOPTResponse` | Typed versions of the Training Optimizer (TOPT) request and response JSON. See [About `TOPTRequest` and `TOPTResponse`](#about-toptrequest-and-toptresponse). |

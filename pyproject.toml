@@ -37,7 +37,6 @@ line-length = 100
 target-version = "py312"
 
 [tool.ruff.lint]
-# The package reproduces the post's code as closely as possible, including its typing style
-# (Dict, List, Optional) and its `# noqa` comment. These rules would rewrite that code so it no
-# longer matches the post, so they are turned off.
+# Keep the code's typing style (Dict, List, Optional) and its `# noqa` comment, which these
+# rules would otherwise rewrite.
 ignore = ["UP006", "UP035", "UP045", "RUF100"]
