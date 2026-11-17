@@ -215,21 +215,6 @@ boto3 resolution: `AWS_DEFAULT_REGION`, the region in your AWS profile, and inst
 none of these is set, the store raises an error. Without one, the S3 client falls back to
 `us-east-1` without reporting it, which writes artifacts to an unexpected Region.
 
-## Differences from the code in the post
-
-The post's code is reproduced as closely as possible. Each change is marked in the source with a
-comment that starts with `Differs from the post`.
-
-| Change | Why |
-|---|---|
-| No default Region; the store raises an error if none is configured | The post defaults to a specific Region. See the Region note above. |
-| References are validated before they're used in an S3 key | The model passes references to `get_result_page_tool`. Accepting only the 64-character digest format prevents a crafted value from addressing another object. |
-| The store is created on first use, not at import | The post creates it at import time, which raises an error whenever `SESSION_STATE_BUCKET` isn't set, including in tests. |
-| The first `GraphState` is renamed `OriginalGraphState`, and its docstring is indented | Both versions need to exist together. In the post, the docstring starts at column 0, which is a Python `IndentationError`. |
-| `request_raw` and `responses_raw` are declared in `GraphState` | The functions read and write them, but the post's `GraphState` doesn't list them. |
-| The paging snippet and the size check are wrapped in `compact_list_result` and `compact_tool_result` | In the post, they're fragments that use `return` outside a function. |
-| `_canonical_bytes`, `_LLM_SAMPLE_SIZE`, `_MAX_TOOL_CONTENT_CHARS`, `logger`, and minimal `TOPTRequest` / `TOPTResponse` are defined | The post uses them without defining them. |
-
 ## Limitations
 
 This is sample code. Before using it in production, consider these limitations:
